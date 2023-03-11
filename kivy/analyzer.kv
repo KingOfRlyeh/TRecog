@@ -1,0 +1,64 @@
+Root:
+
+    MatGraph:
+        id: matty
+        pos_hint:{'top':1}
+        size_hint: 0.9, 0.9
+    Button:
+        size_hint: 0.6, 0.1
+        text: f"Generate {root.filename}"
+        pos_hint:{'right':1}
+        on_release: matty.generate(value= t_slider.value), root.update_chordname()
+        font_size: dp(root.font_scaling*20)
+    Button:
+        size_hint: 0.4, 0.1
+        text: 'Load File'
+        on_release: root.show_load() 
+        font_size: dp(root.font_scaling*20)
+    Slider:
+        id: t_slider
+        on_value: root.value(self.value)
+        size_hint: 0.1, 0.9
+        orientation: 'vertical'
+        pos_hint: {'top': 1, 'right': 1}
+        min: 0
+        max: 10
+        value_track: True
+        step:0.05
+    Label:
+        id: chordnamelabel
+        size: self.texture_size
+        font_size: dp(root.font_scaling*20)
+        text: 'Press "Generate" to analyze'
+        color: 'red'
+        
+                           
+                      
+<MatGraph>   
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical" 
+         
+        
+        
+        
+                    
+<LoadDialog>:
+    BoxLayout:
+        size: dp(root.font_scaling)
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserIconView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+                
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
