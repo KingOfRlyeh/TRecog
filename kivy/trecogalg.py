@@ -56,7 +56,7 @@ def get_notelist(path: str, c= True, threshold= 5): #extract chromatic tones fro
     chrom_note = librosa.feature.chroma_cqt(y= samples, threshold= threshold)# make more robust noise threshold
     #boolean mask
     chordv = np.sum(chrom_note, axis= 1)
-    chordv = np.nonzero(chordv > 20)
+    chordv = np.nonzero(chordv > (np.sum(chordv)/12))
     #extract note names according to note_map
     if(np.size(chordv, 0) > 4):
         raise Exception('Too many tones found, try raising threshold.')

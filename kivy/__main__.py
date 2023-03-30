@@ -1,5 +1,11 @@
-import kivy
 
+
+from ctypes import windll
+windll.user32.SetProcessDpiAwarenessContext(-4)
+
+
+
+import kivy
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.floatlayout import FloatLayout
@@ -14,6 +20,13 @@ from kivy.uix.slider import Slider
 from kivy.uix.widget import Widget
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
+from kivy.clock import Clock
+from functools import partial
+def set_density(density, *args):
+    from kivy.metrics import Metrics
+    Metrics.density = density
+Clock.schedule_once(partial(set_density, 1.5), 15)
+Clock.schedule_once(partial(set_density, 1), 20)
 
 import matplotlib as mpl
 if kivy.metrics.platform == 'win':
